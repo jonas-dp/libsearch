@@ -1,10 +1,12 @@
 import webbrowser
+import os
+
 from src.utils.Singleton import Singleton
 from src.Configuration import Configuration
 from src.Catalogue import Catalogue
 class HTMLOutput(Singleton, object):
 
-    file = "libsearch.html"
+    file_path = os.path.join(os.path.dirname(__file__), 'libsearch.html')
 
     def createHTML(self, catalogue: Catalogue):
         print("creating HTML output...")
@@ -96,12 +98,12 @@ class HTMLOutput(Singleton, object):
             </body>
             </html>"""
 
-        with open(self.file, "w") as f:
+        with open(self.file_path, "w") as f:
             f.write(content)
             f.close()
 
     def openHTML(self):
-        webbrowser.open(self.file)
+        webbrowser.open(self.file_path)
 
     def branches_to_string(self, branches: dict):
         branch_strings = []
