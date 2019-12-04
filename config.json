@@ -1,0 +1,21 @@
+{
+    "Cultuurconnect": {
+        "authKey": "<key>",
+        "branches": [
+            {
+                "name": "Wetteren",
+                "libraries": [
+                    "Hoofdbibliotheek",
+                    "Massemen"
+                ]
+            },
+            {
+                "name": "Lokeren"
+            }
+        ]
+    },
+    "Goodreads": {
+        "devKey": "<key>",
+        "devSecret": "<secret>"
+    }
+}
