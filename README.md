@@ -1,4 +1,4 @@
-# LibSearch
+# ![alt text](https://github.com/depken/libsearch/raw/development/img/large.png "LibSeach")
 
 LibSearch = Goodreads + bibliotheek.be. Get availabilities of your Goodreads to-read list from Flanders' public libraries.
 
