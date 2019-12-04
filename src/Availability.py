@@ -8,6 +8,7 @@ class Availability(object):
     zizo_image_url = None
     shelfmark = None
     publication = None
+    link = None
     return_date = None
 
     def __init__(self, is_available: bool, branch: str, library: str, status: str, subloc: str, shelfmark: str, publication: str):

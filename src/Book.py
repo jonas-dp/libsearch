@@ -62,7 +62,7 @@ class Book(object):
             availables = [avail for avail in self.availabilities if avail.is_available]
             for avail in availables:
                 content += "<tr>"
-                content += "<td>{}</td>".format(avail.branch)
+                content += "<td><a href='{}' target='_blank'>{}</a></td>".format(avail.link, avail.branch)
                 content += "<td>{}</td>".format(avail.library)
                 content += "<td>"
                 if avail.zizo_image_url is not None:
@@ -101,7 +101,7 @@ class Book(object):
             unavailables = [avail for avail in  self.availabilities if avail.is_available == False]
             for unavail in unavailables:
                 content += "<tr>"
-                content += "<td>{}</td>".format(unavail.branch)
+                content += "<td><a href='{}' target='_blank'>{}</a></td>".format(unavail.link, unavail.branch)
                 content += "<td>{}</td>".format(unavail.library)
                 content += "<td>{}</td>".format(unavail.status)
                 content += "<td>{}</td>".format(unavail.return_date)
