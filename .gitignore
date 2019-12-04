@@ -2,3 +2,4 @@
 libsearch.html
 cache/
 __pycache__/
+config.json
