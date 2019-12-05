@@ -4,6 +4,8 @@ import os
 from src.utils.Singleton import Singleton
 from src.Configuration import Configuration
 from src.Catalogue import Catalogue
+
+
 class HTMLOutput(Singleton, object):
 
     file_path = os.path.join(os.path.dirname(__file__), 'libsearch.html')
@@ -46,21 +48,26 @@ class HTMLOutput(Singleton, object):
             <body>
                 <nav class="navbar navbar-light bg-light sticky-top">
                     <span class="navbar-brand mb-0 h1">LibSearch</span>"""
-        content += '<span class="navbar-text">{}</span>'.format(Configuration().branches_to_string())
+        content += '<span class="navbar-text">{}</span>'.format(
+            Configuration().branches_to_string())
         content += """<div class="col-12">
                         <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item">"""
-        content += '<a class="nav-link {}" data-toggle="pill" href="#available">Available ({})</a>'.format(avail_status, len_avail)
+        content += '<a class="nav-link {}" data-toggle="pill" href="#available">Available ({})</a>'.format(
+            avail_status, len_avail)
         content += """
                             </li>
                             <li class="nav-item">"""
-        content += '<a class="nav-link {}" data-toggle="pill" href="#unavailable">Unavailable ({})</a>'.format(unavail_status, len_unavail)
+        content += '<a class="nav-link {}" data-toggle="pill" href="#unavailable">Unavailable ({})</a>'.format(
+            unavail_status, len_unavail)
         content += """</li>
                             <li class="nav-item">"""
-        content += '<a class="nav-link {}" data-toggle="pill" href="#noavailables">No Availables ({})</a>'.format(no_availables_status, len_no_availables)
+        content += '<a class="nav-link {}" data-toggle="pill" href="#noavailables">No Availables ({})</a>'.format(
+            no_availables_status, len_no_availables)
         content += """</li>
                             <li class="nav-item">"""
-        content += '<a class="nav-link {}" data-toggle="pill" href="#notfound">Not Found ({})</a>'.format(not_found_status, len_not_found)
+        content += '<a class="nav-link {}" data-toggle="pill" href="#notfound">Not Found ({})</a>'.format(
+            not_found_status, len_not_found)
         content += """</li>
                         </ul>
                     </div>
@@ -75,13 +82,13 @@ class HTMLOutput(Singleton, object):
 
         for unavailable_book in unavailable_books:
             content += unavailable_book.to_html()
-        
+
         content += """</div>
             <div class="tab-pane fade" id="noavailables" role="tabpanel" aria-labelledby="noavailables">"""
 
         for book_without_availables in books_without_availables:
             content += book_without_availables.to_html()
-            
+
         content += """</div>
             <div class="tab-pane fade" id="notfound" role="tabpanel" aria-labelledby="notfound">"""
 

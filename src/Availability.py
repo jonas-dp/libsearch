@@ -19,4 +19,3 @@ class Availability(object):
         self.subloc = subloc
         self.shelfmark = shelfmark
         self.publication = publication
-    

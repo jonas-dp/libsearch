@@ -2,6 +2,7 @@ import json
 from os import path
 from src.utils.Singleton import Singleton
 
+
 class Configuration(Singleton, object):
 
     cultuurconnect = {

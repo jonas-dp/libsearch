@@ -8,6 +8,7 @@ from src.Book import Book
 from src.Cache import Cache
 from src.Configuration import Configuration
 
+
 class Goodreads(Singleton, object):
 
     def __init__(self):
@@ -32,21 +33,22 @@ class Goodreads(Singleton, object):
                 base_url='https://www.goodreads.com/'
             )
 
-            request_token, request_token_secret = service.get_request_token(header_auth=True)
+            request_token, request_token_secret = service.get_request_token(
+                header_auth=True)
             auth_url = service.get_authorize_url(request_token)
 
             webbrowser.open_new_tab(auth_url)
 
             authorized = 'n'
             while authorized.lower() != 'y':
-                authorized = input('Have you authorized the application? (y/n) ')
+                authorized = input(
+                    'Have you authorized the application? (y/n) ')
 
             return service.get_auth_session(request_token, request_token_secret)
 
     def get_user_id(self, oauth_session):
         response = oauth_session.get('https://www.goodreads.com/api/auth_user')
         return et.fromstring(response.content).find('.//user').get('id')
-
 
     def get_books(self):
         print('get goodreads oauth tokens...')
@@ -67,7 +69,8 @@ class Goodreads(Singleton, object):
         for response_book in response_books:
             title = response_book.find('.//title_without_series').text
             title = re.sub('[^0-9a-zA-Z ]', ' ', title)
-            book = Book(response_book.find('.//author/name').text, title, response_book.find('.//id').text)
+            book = Book(response_book.find('.//author/name').text,
+                        title, response_book.find('.//id').text)
             book.goodreads_page = response_book.find('.//link').text
             book.goodreads_cover = response_book.find('.//image_url').text
             books.append(book)

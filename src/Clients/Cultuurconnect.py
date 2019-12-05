@@ -9,6 +9,7 @@ from src.Availability import Availability
 from src.Cache import Cache
 from src.Configuration import Configuration
 
+
 class Cultuurconnect(Singleton, object):
 
     base_url = 'https://cataloguswebservices.bibliotheek.be'
@@ -21,12 +22,14 @@ class Cultuurconnect(Singleton, object):
         if cached_book is not None:
             return cached_book
 
-        url = '{0}/oostvlaanderen/search/?q=title:{1} AND author:{2}&authorization={3}'.format(self.base_url, book.title, book.author, Configuration().cultuurconnect['auth_key'])
+        url = '{0}/oostvlaanderen/search/?q=title:{1} AND author:{2}&authorization={3}'.format(
+            self.base_url, book.title, book.author, Configuration().cultuurconnect['auth_key'])
         async with session.get(url) as response:
             tree = et.fromstring(await response.text())
 
             if not tree.find('.//results'):
-                print('\033[91m {} by {} not found\033[00m'.format(book.title, book.author))
+                print('\033[91m {} by {} not found\033[00m'.format(
+                    book.title, book.author))
                 return book
             else:
                 print('{} by {} found'.format(book.title, book.author))
@@ -47,7 +50,8 @@ class Cultuurconnect(Singleton, object):
 
     async def get_availibities_of_books(self, books: list):
         async with aiohttp.ClientSession() as session:
-            tasks = [self.get_book_availabilities(book, session) for book in books]
+            tasks = [self.get_book_availabilities(
+                book, session) for book in books]
             return await asyncio.gather(*tasks)
 
     async def get_book_availabilities(self, book: Book, session):
@@ -55,7 +59,8 @@ class Cultuurconnect(Singleton, object):
             return book
 
         for branch_config in self.branches:
-            url = '{0}/{1}/availability/?frabl={2}&authorization={3}'.format(self.base_url, branch_config["name"], book.frabl, Configuration().cultuurconnect['auth_key'])
+            url = '{0}/{1}/availability/?frabl={2}&authorization={3}'.format(
+                self.base_url, branch_config["name"], book.frabl, Configuration().cultuurconnect['auth_key'])
             async with session.get(url) as response:
                 tree = et.fromstring(await response.text())
 
@@ -79,21 +84,26 @@ class Cultuurconnect(Singleton, object):
                                 item.find('publication').text
                             )
 
-                            avail.link = tree.find('.//detail-page').text + item.get('extid')
+                            avail.link = tree.find(
+                                './/detail-page').text + item.get('extid')
 
                             if item.find('zizo') is not None:
-                                avail.zizo_image_url = item.find('zizo').get('image')
+                                avail.zizo_image_url = item.find(
+                                    'zizo').get('image')
 
                             if item.find('returndate') is not None:
                                 returndate = item.find('returndate').text
-                                returndate = datetime.date(int(returndate[6:11]), int(returndate[3:5]), int(returndate[0:2]))
+                                returndate = datetime.date(int(returndate[6:11]), int(
+                                    returndate[3:5]), int(returndate[0:2]))
                                 avail.return_date = returndate
 
-                            book.add_availablity(avail)          
+                            book.add_availablity(avail)
 
-        if len(book.availabilities) > 0 :
-            print("{} availabilities found for {} by {}".format(len(book.availabilities), book.title, book.author))
+        if len(book.availabilities) > 0:
+            print("{} availabilities found for {} by {}".format(
+                len(book.availabilities), book.title, book.author))
         else:
-            print("\033[91m No availabilities found for {} by {}\033[00m".format(book.title, book.author))
+            print("\033[91m No availabilities found for {} by {}\033[00m".format(
+                book.title, book.author))
 
         return book

@@ -4,14 +4,17 @@ from src.utils.Singleton import Singleton
 from src.Book import Book
 from src.Catalogue import Catalogue
 
+
 class Cache(Singleton, object):
 
     catalogue = None
     tokens = None
 
     cache_dir = os.path.join(os.path.dirname(__file__), '..\\cache')
-    tokens_cache_path = os.path.join(os.path.dirname(__file__), '..\\cache\\.tokens')
-    catalogue_cache_path = os.path.join(os.path.dirname(__file__), '..\\cache\\.catalogue.json')
+    tokens_cache_path = os.path.join(
+        os.path.dirname(__file__), '..\\cache\\.tokens')
+    catalogue_cache_path = os.path.join(
+        os.path.dirname(__file__), '..\\cache\\.catalogue.json')
 
     def __init__(self):
         if not os.path.exists(self.cache_dir):
@@ -24,7 +27,8 @@ class Cache(Singleton, object):
 
     def save_catalogue(self, catalogue: Catalogue):
         with open(self.catalogue_cache_path, 'w') as catalogue_cache:
-            dicts = [book.__dict__ for book in catalogue.books if book.frabl is not None]
+            dicts = [
+                book.__dict__ for book in catalogue.books if book.frabl is not None]
             catalogue_cache.write(json.dumps(dicts))
 
         self.catalogue = dicts
@@ -33,11 +37,13 @@ class Cache(Singleton, object):
         if self.catalogue is None:
             return None
 
-        found_book = next((book for book in self.catalogue if book['goodreads_id'] == goodreads_id), None)
+        found_book = next(
+            (book for book in self.catalogue if book['goodreads_id'] == goodreads_id), None)
         if found_book is None:
             return None
 
-        book = Book(found_book['author'], found_book['title'], found_book['goodreads_id'])
+        book = Book(found_book['author'],
+                    found_book['title'], found_book['goodreads_id'])
         book.frabl = found_book['frabl']
         book.vlacc = found_book['vlacc']
         book.isbn = found_book['isbn']

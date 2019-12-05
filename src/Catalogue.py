@@ -1,5 +1,6 @@
 from src.utils.Singleton import Singleton
 
+
 class Catalogue(Singleton, object):
 
     books = None
