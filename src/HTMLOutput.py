@@ -45,7 +45,7 @@ class HTMLOutput(Singleton, object):
 
             <body>
                 <nav class="navbar navbar-light bg-light sticky-top">
-                    <span class="navbar-brand mb-0 h1">LibSearch</span>"""
+                    <span class="navbar-brand mb-2 h1"><img src="img/large.png" height="40" class="d-inline-block align-top" alt=""></span>"""
         content += '<span class="navbar-text">{}</span>'.format(
             Configuration().branches_to_string())
         content += """<div class="col-12">
