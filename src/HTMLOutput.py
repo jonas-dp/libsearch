@@ -8,7 +8,7 @@ from src.Catalogue import Catalogue
 
 class HTMLOutput(Singleton, object):
 
-    file_path = os.path.join(os.path.dirname(__file__), 'libsearch.html')
+    file_path = os.path.join(os.path.dirname(__file__), '..\\libsearch.html')
 
     def createHTML(self, catalogue: Catalogue):
         print("creating HTML output...")
