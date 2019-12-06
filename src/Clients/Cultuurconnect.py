@@ -28,11 +28,8 @@ class Cultuurconnect(Singleton, object):
             tree = et.fromstring(await response.text())
 
             if not tree.find('.//results'):
-                print('\033[91m {} by {} not found\033[00m'.format(
-                    book.title, book.author))
                 return book
             else:
-                print('{} by {} found'.format(book.title, book.author))
                 book.author = tree.find(".//main-author").text
                 book.title = tree.find('.//title').text
                 book.frabl = tree.find('.//frabl').text
@@ -98,12 +95,5 @@ class Cultuurconnect(Singleton, object):
                                 avail.return_date = returndate
 
                             book.add_availablity(avail)
-
-        if len(book.availabilities) > 0:
-            print("{} availabilities found for {} by {}".format(
-                len(book.availabilities), book.title, book.author))
-        else:
-            print("\033[91m No availabilities found for {} by {}\033[00m".format(
-                book.title, book.author))
 
         return book

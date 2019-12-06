@@ -11,8 +11,6 @@ class HTMLOutput(Singleton, object):
     file_path = os.path.join(os.path.dirname(__file__), '..\\libsearch.html')
 
     def createHTML(self, catalogue: Catalogue):
-        print("creating HTML output...")
-
         available_books = catalogue.get_available_books()
         unavailable_books = catalogue.get_unavailable_books()
         books_without_availables = catalogue.get_books_with_no_availables()

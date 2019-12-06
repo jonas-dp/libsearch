@@ -51,14 +51,10 @@ class Goodreads(Singleton, object):
         return et.fromstring(response.content).find('.//user').get('id')
 
     def get_books(self):
-        print('get goodreads oauth tokens...')
-
         session = self.get_auth_session()
 
         if self.tokens is None:
             Cache().save_access_tokens(session.access_token, session.access_token_secret)
-
-        print('start reading books from goodreads...')
 
         user_id = self.get_user_id(session)
 
@@ -74,7 +70,5 @@ class Goodreads(Singleton, object):
             book.goodreads_page = response_book.find('.//link').text
             book.goodreads_cover = response_book.find('.//image_url').text
             books.append(book)
-
-        print('{} books found on to-read shelf'.format(len(books)))
 
         return books

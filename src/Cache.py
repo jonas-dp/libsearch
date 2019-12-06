@@ -52,8 +52,6 @@ class Cache(Singleton, object):
         book.goodreads_page = found_book['goodreads_page']
         book.goodreads_cover = found_book['goodreads_cover']
 
-        print('{} by {} found in cache'.format(book.title, book.author))
-
         return book
 
     def load_tokens(self):
