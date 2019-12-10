@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 import xml.etree.ElementTree as et
 import datetime
+import re
 
 from src.utils.Singleton import Singleton
 from src.Book import Book
@@ -52,48 +53,60 @@ class Cultuurconnect(Singleton, object):
             return await asyncio.gather(*tasks)
 
     async def get_book_availabilities(self, book: Book, session):
+
+        def create_availability(item, branch_name, library_name):
+            avail = Availability(
+                item.get('available') == 'true',
+                branch_name,
+                library_name,
+                item.find('status').text,
+                item.find('subloc').text,
+                item.find('publication').text
+            )
+
+            if item.find('shelfmark') is not None:
+                avail.shelfmark = item.find('shelfmark').text
+
+            avail.link = tree.find(
+                './/detail-page').text + item.get('extid')
+
+            if item.find('zizo') is not None:
+                avail.zizo_image_url = item.find(
+                    'zizo').get('image')
+
+            if item.find('returndate') is not None:
+                returndate = item.find('returndate').text
+                returndate = datetime.date(int(returndate[6:11]), int(
+                    returndate[3:5]), int(returndate[0:2]))
+                avail.return_date = returndate
+            
+            return avail
+
         if book.frabl is None:
             return book
 
         for branch_config in self.branches:
+            branch_name = re.sub('[^a-zA-Z ]', '', branch_config["name"])
             url = '{0}/{1}/availability/?frabl={2}&authorization={3}'.format(
-                self.base_url, branch_config["name"], book.frabl, Configuration().cultuurconnect['auth_key'])
+                self.base_url, branch_name, book.frabl, Configuration().cultuurconnect['auth_key'])
             async with session.get(url) as response:
                 tree = et.fromstring(await response.text())
 
                 if tree.find('.//error'):
                     continue
+                
+                branches = tree.findall('.//locations/location')
 
-                for branch in tree.findall('.//locations/location'):
-                    for library in branch.findall('.//location'):
+                if len(branches) == 1:
+                    for item in branches[0].findall('.//item'):
+                        book.add_availablity(create_availability(item, branch_config["name"], branch_config["name"]))
+                else:
+                    for branch in branches:
+                        for library in branch.findall('.//location'):
+                            if "libraries" in branch_config and library.get('name') not in branch_config["libraries"]:
+                                continue
 
-                        if "libraries" in branch_config and library.get('name') not in branch_config["libraries"]:
-                            continue
-
-                        for item in library.findall('.//item'):
-                            avail = Availability(
-                                item.get('available') == 'true',
-                                branch.get('name'),
-                                library.get('name'),
-                                item.find('status').text,
-                                item.find('subloc').text,
-                                item.find('shelfmark').text,
-                                item.find('publication').text
-                            )
-
-                            avail.link = tree.find(
-                                './/detail-page').text + item.get('extid')
-
-                            if item.find('zizo') is not None:
-                                avail.zizo_image_url = item.find(
-                                    'zizo').get('image')
-
-                            if item.find('returndate') is not None:
-                                returndate = item.find('returndate').text
-                                returndate = datetime.date(int(returndate[6:11]), int(
-                                    returndate[3:5]), int(returndate[0:2]))
-                                avail.return_date = returndate
-
-                            book.add_availablity(avail)
+                            for item in library.findall('.//item'):
+                                book.add_availablity(create_availability(item, branch.get('name'), library.get('name')))
 
         return book
