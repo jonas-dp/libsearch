@@ -95,18 +95,18 @@ class Cultuurconnect(Singleton, object):
                 if tree.find('.//error'):
                     continue
                 
-                branches = tree.findall('.//locations/location')
+                branch = tree.find('.//locations/location')
+                libraries = branch.findall('location')
 
-                if len(branches) == 1:
-                    for item in branches[0].findall('.//item'):
+                if len(libraries) == 0:
+                    for item in branch.findall('.//item'):
                         book.add_availablity(create_availability(item, branch_config["name"], branch_config["name"]))
                 else:
-                    for branch in branches:
-                        for library in branch.findall('.//location'):
-                            if "libraries" in branch_config and library.get('name') not in branch_config["libraries"]:
-                                continue
+                    for library in libraries:
+                        if "libraries" in branch_config and library.get('name') not in branch_config["libraries"]:
+                            continue
 
-                            for item in library.findall('.//item'):
-                                book.add_availablity(create_availability(item, branch.get('name'), library.get('name')))
+                        for item in library.findall('.//item'):
+                            book.add_availablity(create_availability(item, branch.get('name'), library.get('name')))
 
         return book
