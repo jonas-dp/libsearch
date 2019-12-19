@@ -68,7 +68,7 @@ class Goodreads(Singleton, object):
             book = Book(response_book.find('.//author/name').text,
                         title, response_book.find('.//id').text)
             book.goodreads_page = response_book.find('.//link').text
-            book.goodreads_cover = response_book.find('.//image_url').text
+            book.cover_url = response_book.find('.//image_url').text
             books.append(book)
 
         return books

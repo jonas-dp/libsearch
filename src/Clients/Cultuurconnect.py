@@ -34,10 +34,12 @@ class Cultuurconnect(Singleton, object):
                 book.author = tree.find(".//main-author").text
                 book.title = tree.find('.//title').text
                 book.frabl = tree.find('.//frabl').text
-                book.vlacc = tree.find('.//id').get('nativeid')
                 book.isbn = tree.find('.//normalized-isbn-id').text
                 book.pages = tree.find('.//physical-description').text
-                book.detail_page = tree.find('.//detail-page').text
+                book.library_page = tree.find('.//detail-page').text
+
+                vlacc = tree.find('.//id').get('nativeid')
+                book.cover_url = 'https://webservices.bibliotheek.be/index.php?func=cover&ISBN={0}&VLACCnr={1}&CDR=&EAN=&ISMN=&coversize=medium'.format(book.isbn, vlacc)
                 return book
 
     async def search_books(self, books: list):

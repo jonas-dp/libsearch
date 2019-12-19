@@ -4,13 +4,12 @@ from datetime import date
 class Book(object):
 
     frabl = None
-    vlacc = None
     isbn = None
     pages = None
     availabilities = None
-    detail_page = None
+    library_page = None
     goodreads_page = None
-    goodreads_cover = None
+    cover_url = None
     is_available = False
 
     def __init__(self, author: str, title: str, goodreads_id: str):
@@ -26,18 +25,12 @@ class Book(object):
         if availability.is_available:
             self.is_available = True
 
-    def get_cover_url(self):
-        if self.frabl is not None:
-            return "https://webservices.bibliotheek.be/index.php?func=cover&ISBN={0}&VLACCnr={1}&CDR=&EAN=&ISMN=&coversize=medium".format(self.isbn, self.vlacc)
-        else:
-            return self.goodreads_cover
-
     def to_html(self):
         content = """<div class="card">
                 <div class="row no-gutters">
                     <div class="col-md-1">"""
         content += '<img class="card-img" src="{}">'.format(
-            self.get_cover_url())
+            self.cover_url)
 
         content += """</div>
             <div class="col-md-11">
@@ -83,7 +76,7 @@ class Book(object):
             content += '<p class="card-text"><small class="text-muted">{} - {}</small></p>'.format(
                 self.isbn, self.pages)
             content += '<a href="{}" class="card-link" target="_blank">Catalogus</a>'.format(
-                self.detail_page)
+                self.library_page)
             content += '<a href="{}" class="card-link" target="_blank">Goodreads</a>'.format(
                 self.goodreads_page)
 
@@ -126,7 +119,7 @@ class Book(object):
             content += '<p class="card-text"><small class="text-muted">{} - {}</small></p>'.format(
                 self.isbn, self.pages)
             content += '<a href="{}" class="card-link" target="_blank">Catalogus</a>'.format(
-                self.detail_page)
+                self.library_page)
             content += '<a href="{}" class="card-link" target="_blank">Goodreads</a>'.format(
                 self.goodreads_page)
 
@@ -141,7 +134,7 @@ class Book(object):
             content += '<p class="card-text"><small class="text-muted">{} - {}</small></p>'.format(
                 self.isbn, self.pages)
             content += '<a href="{}" class="card-link" target="_blank">Catalogus</a>'.format(
-                self.detail_page)
+                self.library_page)
             content += '<a href="{}" class="card-link" target="_blank">Goodreads</a>'.format(
                 self.goodreads_page)
 
