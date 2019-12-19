@@ -10,20 +10,20 @@ class Book(object):
     library_page = None
     goodreads_page = None
     cover_url = None
-    is_available = False
+    status = None
 
     def __init__(self, author: str, title: str, goodreads_id: str):
         self.author = author
         self.title = title
         self.goodreads_id = goodreads_id
-
+        self.status = 'NOT_FOUND'
         self.availabilities = []
 
     def add_availablity(self, availability):
         self.availabilities.append(availability)
 
         if availability.is_available:
-            self.is_available = True
+            self.status = 'AVAILABLE'
 
     def to_html(self):
         content = """<div class="card">

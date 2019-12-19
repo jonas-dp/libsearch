@@ -31,6 +31,8 @@ class Cultuurconnect(Singleton, object):
             if not tree.find('.//results'):
                 return book
             else:
+                book.status = 'NO_AVAILABILITIES'
+
                 book.author = tree.find(".//main-author").text
                 book.title = tree.find('.//title').text
                 book.frabl = tree.find('.//frabl').text
@@ -96,6 +98,8 @@ class Cultuurconnect(Singleton, object):
 
                 if tree.find('.//error'):
                     continue
+
+                book.status = 'UNAVAILABLE'
                 
                 branch = tree.find('.//locations/location')
                 libraries = branch.findall('location')

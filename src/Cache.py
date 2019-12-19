@@ -50,6 +50,7 @@ class Cache(Singleton, object):
         book.pages = found_book['pages']
         book.library_page = found_book['library_page']
         book.goodreads_page = found_book['goodreads_page']
+        book.status = found_book['status']
 
         return book
 

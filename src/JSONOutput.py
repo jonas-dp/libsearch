@@ -11,4 +11,4 @@ class JSONOutput(Singleton, object):
 
     def dump_catalogue(self, catalogue: Catalogue):
         with open(self.dump_file_path, 'w') as catalogue_cache:
-            catalogue_cache.write(jsonpickle.encode(catalogue, unpicklable=False, make_refs=False))
+            catalogue_cache.write(jsonpickle.encode(catalogue, unpicklable=False))
