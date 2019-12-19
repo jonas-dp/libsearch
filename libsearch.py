@@ -32,7 +32,7 @@ def main():
     loop.close()
 
     ProgressBar().print(3, 3, 'Creating output...')
-    JSONOutput().dump_catalogue(catalogue)
+    JSONOutput().dump_info(catalogue)
     # HTMLOutput().createHTML(catalogue)
     # HTMLOutput().openHTML()
 
