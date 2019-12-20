@@ -75,7 +75,7 @@ class Cultuurconnect(Singleton, object):
                 './/detail-page').text + item.get('extid')
             
             zizo = item.find('zizo')
-            if zizo is not None and zizo.get('code') is not '':
+            if zizo is not None and zizo.get('code') != '':
                 avail.zizo_image_url = item.find(
                     'zizo').get('image')
 
@@ -90,6 +90,8 @@ class Cultuurconnect(Singleton, object):
         if book.frabl is None:
             return book
 
+        availabilities = []
+
         for branch_config in self.branches:
             branch_name = re.sub('[^a-zA-Z ]', '', branch_config["name"])
             url = '{0}/{1}/availability/?frabl={2}&authorization={3}'.format(
@@ -99,21 +101,23 @@ class Cultuurconnect(Singleton, object):
 
                 if tree.find('.//error'):
                     continue
-
-                book.status = 'UNAVAILABLE'
                 
                 branch = tree.find('.//locations/location')
                 libraries = branch.findall('location')
 
                 if len(libraries) == 0:
                     for item in branch.findall('.//item'):
-                        book.add_availablity(create_availability(item, branch_config["name"], branch_config["name"]))
+                        availabilities.append(create_availability(item, branch_config["name"], branch_config["name"]))
                 else:
                     for library in libraries:
                         if "libraries" in branch_config and library.get('name') not in branch_config["libraries"]:
                             continue
 
                         for item in library.findall('.//item'):
-                            book.add_availablity(create_availability(item, branch.get('name'), library.get('name')))
+                            availabilities.append(create_availability(item, branch.get('name'), library.get('name')))
+
+        book.status = 'UNAVAILABLE'
+        for avail in availabilities:
+            book.add_availablity(avail)
 
         return book
