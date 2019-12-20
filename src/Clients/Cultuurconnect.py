@@ -73,8 +73,9 @@ class Cultuurconnect(Singleton, object):
 
             avail.link = tree.find(
                 './/detail-page').text + item.get('extid')
-
-            if item.find('zizo') is not None:
+            
+            zizo = item.find('zizo')
+            if zizo is not None and zizo.get('code') is not '':
                 avail.zizo_image_url = item.find(
                     'zizo').get('image')
 
