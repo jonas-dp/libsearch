@@ -116,7 +116,9 @@ class Cultuurconnect(Singleton, object):
                         for item in library.findall('.//item'):
                             availabilities.append(create_availability(item, branch.get('name'), library.get('name')))
 
-        book.status = 'UNAVAILABLE'
+        if len(availabilities) > 0:
+            book.status = 'UNAVAILABLE'
+            
         for avail in availabilities:
             book.add_availablity(avail)
 

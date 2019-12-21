@@ -7,7 +7,7 @@ from src.Configuration import Configuration
 
 class JSONOutput(Singleton, object):
 
-    dump_file_path = os.path.join(os.path.dirname(__file__), '..\\libsearch.json')
+    dump_file_path = os.path.join(os.path.dirname(__file__), '..\\www\\assets\\libsearch.json')
 
     def dump_info(self, catalogue: Catalogue):
         dump = {
