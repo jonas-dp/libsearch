@@ -1,7 +1,7 @@
 import asyncio
 import webbrowser
-
 from src.Clients.Cultuurconnect import Cultuurconnect
+
 from src.Clients.Goodreads import Goodreads
 from src.HTMLOutput import HTMLOutput
 from src.JSONOutput import JSONOutput

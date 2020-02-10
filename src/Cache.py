@@ -1,5 +1,7 @@
 import json
 import os
+from pathlib import Path
+
 from src.utils.Singleton import Singleton
 from src.Book import Book
 from src.Catalogue import Catalogue
@@ -10,11 +12,9 @@ class Cache(Singleton, object):
     catalogue = None
     tokens = None
 
-    cache_dir = os.path.join(os.path.dirname(__file__), '..\\cache')
-    tokens_cache_path = os.path.join(
-        os.path.dirname(__file__), '..\\cache\\.tokens')
-    catalogue_cache_path = os.path.join(
-        os.path.dirname(__file__), '..\\cache\\.catalogue.json')
+    cache_dir = os.path.join(Path(os.path.dirname(__file__)).parent, 'cache')
+    tokens_cache_path = os.path.join(cache_dir, '.tokens')
+    catalogue_cache_path = os.path.join(cache_dir, '.catalogue.json')
 
     def __init__(self):
         if not os.path.exists(self.cache_dir):
