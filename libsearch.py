@@ -1,12 +1,15 @@
 import asyncio
-
+import webbrowser
 from src.Clients.Cultuurconnect import Cultuurconnect
+
 from src.Clients.Goodreads import Goodreads
 from src.HTMLOutput import HTMLOutput
+from src.JSONOutput import JSONOutput
 from src.Configuration import Configuration
 from src.Cache import Cache
 from src.Catalogue import Catalogue
 from src.UI.ProgressBar import ProgressBar
+from src.WebServer import WebServer
 
 def main():
 
@@ -31,8 +34,11 @@ def main():
     loop.close()
 
     ProgressBar().print(3, 3, 'Creating output...')
-    HTMLOutput().createHTML(catalogue)
-    HTMLOutput().openHTML()
+    JSONOutput().dump_info(catalogue)
+    webbrowser.open('http://127.0.0.1:8080')
+    WebServer().run()
+    # HTMLOutput().createHTML(catalogue)
+    # HTMLOutput().openHTML()
 
 
 if __name__ == "__main__":

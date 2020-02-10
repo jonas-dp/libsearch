@@ -1,5 +1,7 @@
 import json
 import os
+from pathlib import Path
+
 from src.utils.Singleton import Singleton
 from src.Book import Book
 from src.Catalogue import Catalogue
@@ -10,11 +12,9 @@ class Cache(Singleton, object):
     catalogue = None
     tokens = None
 
-    cache_dir = os.path.join(os.path.dirname(__file__), '..\\cache')
-    tokens_cache_path = os.path.join(
-        os.path.dirname(__file__), '..\\cache\\.tokens')
-    catalogue_cache_path = os.path.join(
-        os.path.dirname(__file__), '..\\cache\\.catalogue.json')
+    cache_dir = os.path.join(Path(os.path.dirname(__file__)).parent, 'cache')
+    tokens_cache_path = os.path.join(cache_dir, '.tokens')
+    catalogue_cache_path = os.path.join(cache_dir, '.catalogue.json')
 
     def __init__(self):
         if not os.path.exists(self.cache_dir):
@@ -45,12 +45,12 @@ class Cache(Singleton, object):
         book = Book(found_book['author'],
                     found_book['title'], found_book['goodreads_id'])
         book.frabl = found_book['frabl']
-        book.vlacc = found_book['vlacc']
+        book.cover_url = found_book['cover_url']
         book.isbn = found_book['isbn']
         book.pages = found_book['pages']
-        book.detail_page = found_book['detail_page']
+        book.library_page = found_book['library_page']
         book.goodreads_page = found_book['goodreads_page']
-        book.goodreads_cover = found_book['goodreads_cover']
+        book.status = found_book['status']
 
         return book
 

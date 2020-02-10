@@ -1,6 +1,6 @@
 {
     "Cultuurconnect": {
-        "authKey": "<key>",
+        "authKey": "b8157a8a17c57162b1c9d8096c5f3620",
         "branches": [
             {
                 "name": "Wetteren",
@@ -15,7 +15,7 @@
         ]
     },
     "Goodreads": {
-        "devKey": "<key>",
-        "devSecret": "<secret>"
+        "devKey": "cAvEaBAqkIvalCeJAfOzgQ",
+        "devSecret": "EKI47OzQU5OLJ15RVFJyT9fFKYupf15dylzbXLHeyM"
     }
 }

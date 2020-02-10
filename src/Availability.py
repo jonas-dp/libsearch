@@ -11,11 +11,10 @@ class Availability(object):
     link = None
     return_date = None
 
-    def __init__(self, is_available: bool, branch: str, library: str, status: str, subloc: str, shelfmark: str, publication: str):
+    def __init__(self, is_available: bool, branch: str, library: str, status: str, subloc: str, publication: str):
         self.is_available = is_available
         self.branch = branch
         self.library = library
         self.status = status
         self.subloc = subloc
-        self.shelfmark = shelfmark
         self.publication = publication

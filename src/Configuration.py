@@ -1,5 +1,6 @@
 import json
-from os import path
+from os import path as ospath
+from pathlib import Path
 from src.utils.Singleton import Singleton
 
 
@@ -16,7 +17,9 @@ class Configuration(Singleton, object):
     }
 
     def load(self):
-        config_path = path.join(path.dirname(__file__), '..\\config.json')
+        # config_path = path.join(ospath.dirname(__file__), '..\\config.json')
+        config_path = ospath.join(Path(ospath.dirname(__file__)).parent, 'config.json')
+
 
         with open(config_path) as config_file:
             config_json = json.load(config_file)
