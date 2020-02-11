@@ -731,17 +731,23 @@
                         if (this.activeFilterBtn) {
                             this.setButtonInactive(this.activeFilterBtn);
                         }
-                        button.nativeElement.classList.remove('btn-outline-secondary');
-                        button.nativeElement.classList.add('btn-secondary');
-                        this.activeFilterBtn = button;
+                        this.setButtonActive(button);
                     }
                 };
                 FilterbarComponent.prototype.setButtonInactive = function (button) {
                     button.nativeElement.classList.remove('btn-secondary');
                     button.nativeElement.classList.add('btn-outline-secondary');
                 };
+                FilterbarComponent.prototype.setButtonActive = function (button) {
+                    button.nativeElement.classList.remove('btn-outline-secondary');
+                    button.nativeElement.classList.add('btn-secondary');
+                    this.activeFilterBtn = button;
+                };
                 FilterbarComponent.prototype.onSearchInputChange = function (element) {
-                    this.onAllFilterBtnClick();
+                    if (this.activeFilterBtn !== this.allFilterBtn) {
+                        this.setButtonInactive(this.activeFilterBtn);
+                        this.setButtonActive(this.allFilterBtn);
+                    }
                     this.setSearchFilter(this.search);
                 };
                 FilterbarComponent.prototype.setSearchFilter = function (query) {
