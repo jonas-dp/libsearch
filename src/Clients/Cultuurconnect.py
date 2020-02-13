@@ -71,8 +71,7 @@ class Cultuurconnect(Singleton, object):
             if item.find('shelfmark') is not None:
                 avail.shelfmark = item.find('shelfmark').text
 
-            avail.link = tree.find(
-                './/detail-page').text + item.get('extid')
+            avail.link = tree.find('.//detail-page').text
             
             zizo = item.find('zizo')
             if zizo is not None and zizo.get('code') != '':
