@@ -33,10 +33,14 @@ class Cultuurconnect(Singleton, object):
             else:
                 book.status = 'NO_AVAILABILITIES'
 
+                isbn = tree.find('.//normalized-isbn-id')
+                if isbn is not None:
+                    book.isbn = isbn.text
+
                 book.author = tree.find(".//main-author").text
                 book.title = tree.find('.//title').text
                 book.frabl = tree.find('.//frabl').text
-                book.isbn = tree.find('.//normalized-isbn-id').text
+                
                 book.pages = tree.find('.//physical-description').text
                 book.library_page = tree.find('.//detail-page').text
 
