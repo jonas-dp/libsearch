@@ -14,6 +14,7 @@ class Book(object):
 
     def __init__(self, author: str, title: str, goodreads_id: str):
         self.author = author
+        self.author_last_name = author.split(' ')[-1]
         self.title = title
         self.goodreads_id = goodreads_id
         self.status = 'NOT_FOUND'

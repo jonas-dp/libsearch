@@ -24,7 +24,7 @@ class Cultuurconnect(Singleton, object):
             return cached_book
 
         url = '{0}/oostvlaanderen/search/?q=title:{1} AND author:{2}&authorization={3}'.format(
-            self.base_url, book.title, book.author, Configuration().cultuurconnect['auth_key'])
+            self.base_url, book.title, book.author_last_name, Configuration().cultuurconnect['auth_key'])
         async with session.get(url) as response:
             tree = et.fromstring(await response.text())
 
