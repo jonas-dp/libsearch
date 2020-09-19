@@ -5,6 +5,8 @@ class Availability(object):
     library = None
     status = None
     subloc = None
+    zizo_name = None
+    zizo_subname = None
     zizo_image_url = None
     shelfmark = None
     publication = None

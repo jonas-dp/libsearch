@@ -39,7 +39,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card-text\" [ngSwitch]='bookStatus'>\r\n    <table class=\"table table-sm table-light\" *ngSwitchCase=\"'AVAILABLE'\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Branch</th>\r\n                <th scope=\"col\">Library</th>\r\n                <th scope=\"col\">Sublocation</th>\r\n                <th scope=\"col\">Shelfmark</th>\r\n                <th scope=\"col\">Publication</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor='let avail of availabilities'>\r\n                <td><a href='{{ avail.link }}' target='_blank'>{{ avail.branch }}</a></td>\r\n                <td>{{ avail.library }}</td>\r\n                <td>\r\n                    <img class='zizo' [src]='avail.zizo_image_url' *ngIf='avail.zizo_image_url'/>\r\n                    {{ avail.subloc }}\r\n                </td>\r\n                <td>{{ avail.shelfmark }}</td>\r\n                <td>{{ avail.publication }}</td>\r\n            <tr>\r\n        </tbody>\r\n    </table>\r\n    <table class=\"table\" *ngSwitchCase=\"'UNAVAILABLE'\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Branch</th>\r\n                <th scope=\"col\">Library</th>\r\n                <th scope=\"col\">Status</th>\r\n                <th scope=\"col\">Return Date</th>\r\n                <th scope=\"col\">Days until available</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor='let avail of availabilities'>\r\n                <td><a href='{{ avail.link }}' target='_blank'>{{ avail.branch }}</a></td>\r\n                <td>{{ avail.library }}</td>\r\n                <td>{{ avail.status }}</td>\r\n                <td>{{ avail.return_date | date }}</td>\r\n                <td>{{ avail.return_date | datediff:today }}</td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n    <p *ngSwitchCase=\"'NO_AVAILABILITIES'\">No availabilities found.</p>\r\n    <p *ngSwitchCase=\"'NOT_FOUND'\">Not found in library catalogue.</p>\r\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card-text\" [ngSwitch]='bookStatus'>\r\n    <table class=\"table table-sm table-light\" *ngSwitchCase=\"'AVAILABLE'\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Branch</th>\r\n                <th scope=\"col\">Library</th>\r\n                <th scope=\"col\">Sublocation</th>\r\n                <th scope=\"col\">Shelfmark</th>\r\n                <th scope=\"col\">Publication</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor='let avail of availabilities'>\r\n                <td><a href='{{ avail.link }}' target='_blank'>{{ avail.branch }}</a></td>\r\n                <td>{{ avail.library }}</td>\r\n                <td *ngIf=\"avail.zizo_name\">\r\n                    <img class='zizo' [src]='avail.zizo_image_url' *ngIf='avail.zizo_image_url'/>\r\n                    {{ avail.subloc }} - {{ avail.zizo_name }} - {{ avail.zizo_subname }}\r\n                </td>\r\n                <td *ngIf=\"!avail.zizo_name\">\r\n                    {{ avail.subloc }}\r\n                </td>\r\n                <td>{{ avail.shelfmark }}</td>\r\n                <td>{{ avail.publication }}</td>\r\n            <tr>\r\n        </tbody>\r\n    </table>\r\n    <table class=\"table\" *ngSwitchCase=\"'UNAVAILABLE'\">\r\n        <thead>\r\n            <tr>\r\n                <th scope=\"col\">Branch</th>\r\n                <th scope=\"col\">Library</th>\r\n                <th scope=\"col\">Status</th>\r\n                <th scope=\"col\">Return Date</th>\r\n                <th scope=\"col\">Days until available</th>\r\n            </tr>\r\n        </thead>\r\n        <tbody>\r\n            <tr *ngFor='let avail of availabilities'>\r\n                <td><a href='{{ avail.link }}' target='_blank'>{{ avail.branch }}</a></td>\r\n                <td>{{ avail.library }}</td>\r\n                <td>{{ avail.status }}</td>\r\n                <td>{{ avail.return_date | date }}</td>\r\n                <td>{{ avail.return_date | datediff:today }}</td>\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n    <p *ngSwitchCase=\"'NO_AVAILABILITIES'\">No availabilities found.</p>\r\n    <p *ngSwitchCase=\"'NOT_FOUND'\">Not found in library catalogue.</p>\r\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/book/book.component.html": 
@@ -409,7 +409,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */");
             /***/ 
         }),
         /***/ "./src/app/app.component.ts": 
@@ -510,7 +510,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = (".zizo {\r\n    width: 30px; \r\n    margin-right: 5px;\r\n}");
+            /* harmony default export */ __webpack_exports__["default"] = (".zizo {\r\n    width: 30px; \r\n    margin-right: 5px;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXZhaWxhYmlsaXRpZXMvYXZhaWxhYmlsaXRpZXMuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLFdBQVc7SUFDWCxpQkFBaUI7QUFDckIiLCJmaWxlIjoic3JjL2FwcC9hdmFpbGFiaWxpdGllcy9hdmFpbGFiaWxpdGllcy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnppem8ge1xyXG4gICAgd2lkdGg6IDMwcHg7IFxyXG4gICAgbWFyZ2luLXJpZ2h0OiA1cHg7XHJcbn0iXX0= */");
             /***/ 
         }),
         /***/ "./src/app/availabilities/availabilities.component.ts": 
@@ -558,7 +558,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Jvb2svYm9vay5jb21wb25lbnQuY3NzIn0= */");
             /***/ 
         }),
         /***/ "./src/app/book/book.component.ts": 
@@ -667,7 +667,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2ZpbHRlcmJhci9maWx0ZXJiYXIuY29tcG9uZW50LmNzcyJ9 */");
             /***/ 
         }),
         /***/ "./src/app/filterbar/filterbar.component.ts": 
@@ -794,7 +794,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hlYWRlci9oZWFkZXIuY29tcG9uZW50LmNzcyJ9 */");
             /***/ 
         }),
         /***/ "./src/app/header/header.component.ts": 
@@ -880,6 +880,8 @@
                                     status: avail.status,
                                     subloc: avail.subloc,
                                     publication: avail.publication,
+                                    zizo_name: avail.zizo_name,
+                                    zizo_subname: avail.zizo_subname,
                                     zizo_image_url: avail.zizo_image_url,
                                     shelfmark: avail.shelfmark,
                                     link: avail.link,
@@ -972,7 +974,10 @@
           \***************************/
         /*! no static exports found */
         /***/ (function (module, exports, __webpack_require__) {
-            module.exports = __webpack_require__(/*! /media/jonas/Data/projects/libsearch-angular/src/main.ts */ "./src/main.ts");
+            module.exports = __webpack_require__(/*! D:\projects\libsearch-angular\src\main.ts */ "./src/main.ts");
             /***/ 
         })
     }, [[0, "runtime", "vendor"]]]);
+//# sourceMappingURL=main-es2015.js.map
+//# sourceMappingURL=main-es5.js.map
+//# sourceMappingURL=main-es5.js.map

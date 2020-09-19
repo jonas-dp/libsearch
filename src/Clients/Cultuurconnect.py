@@ -79,6 +79,8 @@ class Cultuurconnect(Singleton, object):
             
             zizo = item.find('zizo')
             if zizo is not None and zizo.get('code') != '':
+                avail.zizo_name = item.find('zizo').text
+                avail.zizo_subname = item.find('zizo').get('subzizo')
                 avail.zizo_image_url = item.find(
                     'zizo').get('image')
 
