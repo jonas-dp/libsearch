@@ -64,7 +64,7 @@ class Goodreads(Singleton, object):
         books = []
         for response_book in response_books:
             title = response_book.find('.//title_without_series').text
-            title = re.sub('[^0-9A-zÀ-ÿ ]', ' ', title)
+            title = re.sub('[^0-9A-zÀ-ÿ- ]', '', title).replace('-', ' ')
             book = Book(response_book.find('.//author/name').text,
                         title, response_book.find('.//id').text)
             book.goodreads_page = response_book.find('.//link').text

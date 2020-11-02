@@ -18,13 +18,13 @@ class Cultuurconnect(Singleton, object):
     def __init__(self):
         self.branches = Configuration().cultuurconnect['branches']
 
-    async def search_book(self, book: Book, session):
+    async def search_book(self, book: Book, query, session):
         cached_book = Cache().get_book(book.goodreads_id)
         if cached_book is not None:
             return cached_book
 
-        url = '{0}/oostvlaanderen/search/?q=title:{1} AND author:{2}&authorization={3}'.format(
-            self.base_url, book.title, book.author_last_name, Configuration().cultuurconnect['auth_key'])
+        url = '{0}/oostvlaanderen/search/?q={1}&authorization={2}'.format(
+            self.base_url, query, Configuration().cultuurconnect['auth_key'])
         async with session.get(url) as response:
             tree = et.fromstring(await response.text())
 
@@ -51,7 +51,7 @@ class Cultuurconnect(Singleton, object):
     async def search_books(self, books: list):
         Cache().load_catalogue()
         async with aiohttp.ClientSession() as session:
-            tasks = [self.search_book(book, session) for book in books]
+            tasks = [self.search_book(book, f'title:{book.title} AND author:{book.author_last_name}', session) for book in books]
             return await asyncio.gather(*tasks)
 
     async def get_availibities_of_books(self, books: list):
