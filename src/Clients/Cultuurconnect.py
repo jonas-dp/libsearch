@@ -41,11 +41,19 @@ class Cultuurconnect(Singleton, object):
                 book.title = tree.find('.//title').text
                 book.frabl = tree.find('.//frabl').text
                 
-                book.pages = tree.find('.//physical-description').text
+                physical_description = tree.find('.//physical-description')
+                if physical_description is not None:
+                    book.pages = physical_description.text
+
                 book.library_page = tree.find('.//detail-page').text
 
                 vlacc = tree.find('.//id').get('nativeid')
                 book.cover_url = 'https://webservices.bibliotheek.be/index.php?func=cover&ISBN={0}&VLACCnr={1}&CDR=&EAN=&ISMN=&coversize=medium'.format(book.isbn, vlacc)
+
+                book.format = tree.find('.//format').text
+                if book.format == 'ebook':
+                    book.cloudlibrary_id = tree.find('.//cloudlibrary-id').text
+
                 return book
 
     async def search_books(self, books: list):
@@ -63,12 +71,18 @@ class Cultuurconnect(Singleton, object):
     async def get_book_availabilities(self, book: Book, session):
 
         def create_availability(item, branch_name, library_name):
+            subloc = item.find('subloc')
+            if subloc:
+                subloc = subloc.text
+            else:
+                subloc = None
+
             avail = Availability(
                 item.get('available') == 'true',
                 branch_name,
                 library_name,
                 item.find('status').text,
-                item.find('subloc').text,
+                subloc,
                 item.find('publication').text
             )
 

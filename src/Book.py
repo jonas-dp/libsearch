@@ -5,12 +5,14 @@ class Book(object):
 
     frabl = None
     isbn = None
+    cloudlibrary_id = None
     pages = None
     availabilities = None
     library_page = None
     goodreads_page = None
     cover_url = None
     status = None
+    format = None
 
     def __init__(self, author: str, title: str, goodreads_id: str):
         self.author = author

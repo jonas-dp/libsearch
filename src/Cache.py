@@ -47,7 +47,7 @@ class Cache(Singleton, object):
         book.frabl = found_book['frabl']
         book.cover_url = found_book['cover_url']
         book.isbn = found_book.get('isbn')
-        book.pages = found_book['pages']
+        book.pages = found_book.get('pages')
         book.library_page = found_book['library_page']
         book.goodreads_page = found_book['goodreads_page']
         book.status = found_book['status']

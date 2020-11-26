@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card mb-2\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\"><img class=\"card-img\"\n                src=\"{{ book.cover_url }}\">\n        </div>\n        <div class=\"col-md-11\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">{{ book.title }}</h5>\n                <h6 class=\"card-subtitle mb-2 text-muted\">{{ book.author }}</h6>\n                <hr>\n                <app-availabilities [availabilities]='book.availabilities' [bookStatus]='book.status'></app-availabilities>\n                <p *ngIf=\"book.status === 'AVAILABLE' || book.status === 'UNAVAILABLE'\" class=\"card-text\">\n                    <small class=\"text-muted\">{{ book.isbn }} - {{ book.pages }}</small>\n                </p>\n                <a *ngIf=\"book.status !== 'NOT_FOUND'\" href=\"{{ book.library_page }}\" class=\"card-link\" target=\"_blank\">Catalogus</a>\n                <a href=\"{{ book.goodreads_page }}\" class=\"card-link\" target=\"_blank\">Goodreads</a>\n            </div>\n        </div>\n    </div>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card mb-2\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\"><img class=\"card-img\"\n                src=\"{{ book.cover_url }}\">\n        </div>\n        <div class=\"col-md-11\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">{{ book.title }}</h5>\n                <h6 class=\"card-subtitle mb-2 text-muted\">{{ book.author }}</h6>\n                <hr>\n                <app-availabilities *ngIf=\"book.format !== 'ebook'; else ebook\" [availabilities]='book.availabilities' [bookStatus]='book.status'></app-availabilities>\n                <ng-template #ebook>\n                    <div class=\"card-text mb-3\">\n                        This book is available as an ebook at <a href=\"https://ebook.yourcloudlibrary.com/library/deBib-document_id-{{ book.cloudlibrary_id }}\" target=\"_blank\">CloudLibrary</a>.\n                    </div>\n                </ng-template>\n                <p *ngIf=\"book.status === 'AVAILABLE' || book.status === 'UNAVAILABLE'\" class=\"card-text\">\n                    <small class=\"text-muted\">{{ book.isbn }} - {{ book.pages }}</small>\n                </p>\n                <a *ngIf=\"book.status !== 'NOT_FOUND'\" href=\"{{ book.library_page }}\" class=\"card-link\" target=\"_blank\">Catalogus</a>\n                <a href=\"{{ book.goodreads_page }}\" class=\"card-link\" target=\"_blank\">Goodreads</a>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -84,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"navbar navbar-light bg-light sticky-top\">\n    <span class=\"navbar-brand h1\">\n        <img src=\"../../assets/large.png\" height=\"40\" class=\"d-inline-block align-top\" alt=\"\">\n    </span>\n    <span class=\"navbar-text\">{{ libraries }}</span>\n</nav>");
+/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"navbar navbar-light bg-light sticky-top\">\r\n    <span class=\"navbar-brand h1\">\r\n        <img src=\"../../assets/large.png\" height=\"40\" class=\"d-inline-block align-top\" alt=\"\">\r\n    </span>\r\n    <span class=\"navbar-text\">{{ libraries }}</span>\r\n</nav>");
 
 /***/ }),
 
@@ -903,7 +903,9 @@ let BooksService = class BooksService {
                     goodreads_page: jsonBook.goodreads_page,
                     isbn: jsonBook.isbn,
                     pages: jsonBook.pages,
-                    availabilities: avails
+                    availabilities: avails,
+                    'format': jsonBook.format,
+                    cloudlibrary_id: jsonBook.cloudlibrary_id
                 };
             });
             return {
@@ -994,7 +996,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\projects\libsearch-angular\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! F:\projects\libsearch-angular\src\main.ts */"./src/main.ts");
 
 
 /***/ })
