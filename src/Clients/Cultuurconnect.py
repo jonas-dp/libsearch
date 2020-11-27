@@ -26,7 +26,8 @@ class Cultuurconnect(Singleton, object):
         url = '{0}/oostvlaanderen/search/?q={1}&authorization={2}'.format(
             self.base_url, query, Configuration().cultuurconnect['auth_key'])
         async with session.get(url) as response:
-            tree = et.fromstring(await response.text())
+            text = await response.text()
+            tree = et.fromstring(text)
 
             if not tree.find('.//results'):
                 return book
@@ -50,9 +51,11 @@ class Cultuurconnect(Singleton, object):
                 vlacc = tree.find('.//id').get('nativeid')
                 book.cover_url = 'https://webservices.bibliotheek.be/index.php?func=cover&ISBN={0}&VLACCnr={1}&CDR=&EAN=&ISMN=&coversize=medium'.format(book.isbn, vlacc)
 
-                book.format = tree.find('.//format').text
-                if book.format == 'ebook':
-                    book.cloudlibrary_id = tree.find('.//cloudlibrary-id').text
+                book.formats = list(set([book_format.get('text') for book_format in tree.findall('.//undup-info/format')]))
+
+                cloudlibrary_id = tree.find('.//cloudlibrary-id')
+                if cloudlibrary_id is not None:
+                    book.cloudlibrary_id = cloudlibrary_id.text
 
                 return book
 
@@ -126,14 +129,16 @@ class Cultuurconnect(Singleton, object):
 
                 if len(libraries) == 0:
                     for item in branch.findall('.//item'):
-                        availabilities.append(create_availability(item, branch_config["name"], branch_config["name"]))
+                        if item.find('.//cloudlibrary-id') is None:
+                            availabilities.append(create_availability(item, branch_config["name"], branch_config["name"]))
                 else:
                     for library in libraries:
                         if "libraries" in branch_config and library.get('name') not in branch_config["libraries"]:
                             continue
 
                         for item in library.findall('.//item'):
-                            availabilities.append(create_availability(item, branch.get('name'), library.get('name')))
+                            if item.find('.//cloudlibrary-id') is None:
+                                availabilities.append(create_availability(item, branch.get('name'), library.get('name')))
 
         if len(availabilities) > 0:
             book.status = 'UNAVAILABLE'

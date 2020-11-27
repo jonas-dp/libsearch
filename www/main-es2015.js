@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card mb-2\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\"><img class=\"card-img\"\n                src=\"{{ book.cover_url }}\">\n        </div>\n        <div class=\"col-md-11\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">{{ book.title }}</h5>\n                <h6 class=\"card-subtitle mb-2 text-muted\">{{ book.author }}</h6>\n                <hr>\n                <app-availabilities *ngIf=\"book.format !== 'ebook'; else ebook\" [availabilities]='book.availabilities' [bookStatus]='book.status'></app-availabilities>\n                <ng-template #ebook>\n                    <div class=\"card-text mb-3\">\n                        This book is available as an ebook at <a href=\"https://ebook.yourcloudlibrary.com/library/deBib-document_id-{{ book.cloudlibrary_id }}\" target=\"_blank\">CloudLibrary</a>.\n                    </div>\n                </ng-template>\n                <p *ngIf=\"book.status === 'AVAILABLE' || book.status === 'UNAVAILABLE'\" class=\"card-text\">\n                    <small class=\"text-muted\">{{ book.isbn }} - {{ book.pages }}</small>\n                </p>\n                <a *ngIf=\"book.status !== 'NOT_FOUND'\" href=\"{{ book.library_page }}\" class=\"card-link\" target=\"_blank\">Catalogus</a>\n                <a href=\"{{ book.goodreads_page }}\" class=\"card-link\" target=\"_blank\">Goodreads</a>\n            </div>\n        </div>\n    </div>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card mb-2\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\"><img class=\"card-img\"\n                src=\"{{ book.cover_url }}\">\n        </div>\n        <div class=\"col-md-11\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">{{ book.title }}</h5>\n                <h6 class=\"card-subtitle mb-2 text-muted\">{{ book.author }}</h6>\n                <hr>\n                <app-availabilities [availabilities]='book.availabilities' [bookStatus]='book.status'></app-availabilities>\n                <p *ngIf=\"book.status === 'AVAILABLE' || book.status === 'UNAVAILABLE'\" class=\"card-text\">\n                    <small class=\"text-muted\">{{ book.isbn }} - {{ book.pages }}</small>\n                </p>\n                <a *ngIf=\"book.status !== 'NOT_FOUND'\" href=\"{{ book.library_page }}\" class=\"card-link\" target=\"_blank\">Catalogus</a>\n                <a href=\"{{ book.goodreads_page }}\" class=\"card-link\" target=\"_blank\">Goodreads</a>\n                <a *ngIf=\"book.cloudlibrary_id !== undefined\" href=\"https://ebook.yourcloudlibrary.com/library/deBib-document_id-{{ book.cloudlibrary_id }}\" class=\"card-link\" target=\"_blank\">CloudLibrary</a>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -71,7 +71,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row mb-2\">\r\n    <div class=\"col-2\">\r\n    </div>\r\n    <div class=\"col-8 text-center\">\r\n        <div class=\"btn-group\" role=\"group\">\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onAvailableFilterBtnClick()' #availableFilterBtn>Available</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onUnavailableFilterBtnClick()' #unavailableFilterBtn>Unavailable</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onNoAvailabilitiesBtnClick()' #noAvailabilitiesFilterBtn>No Availabilities</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onNotFoundBtnClick()' #notFoundFilterBtn>Not Found</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onAllFilterBtnClick()' #allFilterBtn>All</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-2\">\r\n        <input type=\"search\" class=\"form-control\" placeholder=\"Search by title/author\" (input)='onSearchInputChange($event)' [(ngModel)]='search'>\r\n    </div>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row mb-2\">\r\n    <div class=\"col-2\">\r\n    </div>\r\n    <div class=\"col-8 text-center\">\r\n        <div class=\"btn-group\" role=\"group\">\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onAvailableFilterBtnClick()' #availableFilterBtn>Available</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onUnavailableFilterBtnClick()' #unavailableFilterBtn>Unavailable</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onNoAvailabilitiesBtnClick()' #noAvailabilitiesFilterBtn>No Availabilities</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onNotFoundBtnClick()' #notFoundFilterBtn>Not Found</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onAllFilterBtnClick()' #allFilterBtn>All</button>\r\n            <button type=\"button\" class=\"btn btn-outline-secondary\" (click)='onEbooksFilterBtnClick()' #ebooksFilterBtn>Ebooks</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-2\">\r\n        <input type=\"search\" class=\"form-control\" placeholder=\"Search by title/author\" (input)='onSearchInputChange($event)' [(ngModel)]='search'>\r\n    </div>\r\n</div>");
 
 /***/ }),
 
@@ -695,9 +695,18 @@ let FilterbarComponent = class FilterbarComponent {
     onAllFilterBtnClick() {
         this.toggleButton(this.allFilterBtn, 'ALL');
         this.removeFilter('status');
+        this.removeFilter('ebooks');
         this.addFilter({
             name: 'status',
             filter: (book => 1 === 1)
+        });
+    }
+    onEbooksFilterBtnClick() {
+        this.toggleButton(this.ebooksFilterBtn, 'EBOOKS');
+        this.removeFilter('status');
+        this.addFilter({
+            name: 'ebooks',
+            filter: (book => book.cloudlibrary_id !== undefined)
         });
     }
     removeFilter(filterName) {
@@ -710,6 +719,7 @@ let FilterbarComponent = class FilterbarComponent {
     }
     toggleButton(button, status) {
         this.removeFilter('status');
+        this.removeFilter('ebooks');
         if (this.activeFilterBtn === button) {
             this.setButtonInactive(button);
             this.activeFilterBtn = null;
@@ -764,6 +774,9 @@ tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('allFilterBtn', { static: true })
 ], FilterbarComponent.prototype, "allFilterBtn", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('ebooksFilterBtn', { static: true })
+], FilterbarComponent.prototype, "ebooksFilterBtn", void 0);
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
 ], FilterbarComponent.prototype, "bookFiltersChanged", void 0);

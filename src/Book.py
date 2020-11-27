@@ -12,7 +12,7 @@ class Book(object):
     goodreads_page = None
     cover_url = None
     status = None
-    format = None
+    formats = []
 
     def __init__(self, author: str, title: str, goodreads_id: str):
         self.author = author
