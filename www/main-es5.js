@@ -50,7 +50,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card mb-2\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\"><img class=\"card-img\"\n                src=\"{{ book.cover_url }}\">\n        </div>\n        <div class=\"col-md-11\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">{{ book.title }}</h5>\n                <h6 class=\"card-subtitle mb-2 text-muted\">{{ book.author }}</h6>\n                <hr>\n                <app-availabilities [availabilities]='book.availabilities' [bookStatus]='book.status'></app-availabilities>\n                <p *ngIf=\"book.status === 'AVAILABLE' || book.status === 'UNAVAILABLE'\" class=\"card-text\">\n                    <small class=\"text-muted\">{{ book.isbn }} - {{ book.pages }}</small>\n                </p>\n                <a *ngIf=\"book.status !== 'NOT_FOUND'\" href=\"{{ book.library_page }}\" class=\"card-link\" target=\"_blank\">Catalogus</a>\n                <a href=\"{{ book.goodreads_page }}\" class=\"card-link\" target=\"_blank\">Goodreads</a>\n                <a *ngIf=\"book.cloudlibrary_id !== undefined\" href=\"https://ebook.yourcloudlibrary.com/library/deBib-document_id-{{ book.cloudlibrary_id }}\" class=\"card-link\" target=\"_blank\">CloudLibrary</a>\n            </div>\n        </div>\n    </div>\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card mb-2\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\"><img class=\"card-img\"\n                src=\"{{ book.cover_url }}\">\n        </div>\n        <div class=\"col-md-11\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">{{ book.title }}</h5>\n                <h6 class=\"card-subtitle mb-2 text-muted\">{{ book.author }}</h6>\n                <hr>\n                <app-availabilities [availabilities]='book.availabilities' [bookStatus]='book.status'></app-availabilities>\n                <p *ngIf=\"book.status === 'AVAILABLE' || book.status === 'UNAVAILABLE'\" class=\"card-text\">\n                    <small class=\"text-muted\">{{ book.isbn }} - {{ book.pages }}</small>\n                </p>\n                <a *ngIf=\"book.status !== 'NOT_FOUND'\" href=\"{{ book.library_page }}\" class=\"card-link\" target=\"_blank\">Catalogus</a>\n                <a href=\"{{ book.goodreads_page }}\" class=\"card-link\" target=\"_blank\">Goodreads</a>\n                <a *ngIf=\"book.cloudlibrary_id\" href=\"https://ebook.yourcloudlibrary.com/library/deBib-document_id-{{ book.cloudlibrary_id }}\" class=\"card-link\" target=\"_blank\">CloudLibrary</a>\n            </div>\n        </div>\n    </div>\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/filterbar/filterbar.component.html": 
@@ -715,7 +715,7 @@
                     this.removeFilter('status');
                     this.addFilter({
                         name: 'ebooks',
-                        filter: (function (book) { return book.cloudlibrary_id !== undefined; })
+                        filter: (function (book) { return !!book.cloudlibrary_id; })
                     });
                 };
                 FilterbarComponent.prototype.removeFilter = function (filterName) {

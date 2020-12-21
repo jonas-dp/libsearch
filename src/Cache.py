@@ -51,6 +51,8 @@ class Cache(Singleton, object):
         book.library_page = found_book['library_page']
         book.goodreads_page = found_book['goodreads_page']
         book.status = found_book['status']
+        book.formats = found_book.get('formats')
+        book.cloudlibrary_id = found_book.get('cloudlibrary_id')
 
         return book
 

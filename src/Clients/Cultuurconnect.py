@@ -27,6 +27,8 @@ class Cultuurconnect(Singleton, object):
             self.base_url, query, Configuration().cultuurconnect['auth_key'])
         async with session.get(url) as response:
             text = await response.text()
+            if not text:
+                return book
             tree = et.fromstring(text)
 
             if not tree.find('.//results'):
@@ -119,7 +121,8 @@ class Cultuurconnect(Singleton, object):
             url = '{0}/{1}/availability/?frabl={2}&authorization={3}'.format(
                 self.base_url, branch_name, book.frabl, Configuration().cultuurconnect['auth_key'])
             async with session.get(url) as response:
-                tree = et.fromstring(await response.text())
+                text = await response.text()
+                tree = et.fromstring(text)
 
                 if tree.find('.//error'):
                     continue
